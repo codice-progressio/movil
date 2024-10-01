@@ -5,7 +5,7 @@ import {
   NgbPaginationModule,
   NgbTypeaheadModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { ExcelService, PreviewExcel } from '../../services/excel.service';
+import { ExcelService, TablePreview } from '../../services/excel.service';
 import { Row } from 'read-excel-file';
 
 @Component({
@@ -29,7 +29,7 @@ export class TableComponent {
   page = 1;
   items_per_page = [10, 50, 100];
   pageSize = this.items_per_page[0];
-  data = input<PreviewExcel | undefined>();
+  data = input<TablePreview | undefined>();
   data_buffer: Row[] = [];
   data_view: Row[] = [];
   collection_size = 0;

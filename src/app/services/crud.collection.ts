@@ -28,6 +28,10 @@ export class Collection<T> {
     return from(this.db.get<T>(id));
   }
 
+  read_all() {
+    return from(this.db.allDocs<T>({ include_docs: true }));
+  }
+
   update(data: PouchDB.Core.PutDocument<{} & T>) {
     return this.create(data);
   }
@@ -37,6 +41,6 @@ export class Collection<T> {
   }
 
   bulk(data: PouchDB.Core.PutDocument<{} & T>[]) {
-    return from(this.db.bulkDocs(data));
+    return from(this.db.bulkDocs<T>(data));
   }
 }

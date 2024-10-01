@@ -8,13 +8,13 @@ import { Partner, PartnerEnum } from '../models/partner.model';
 export class ExcelService {
   constructor() {}
 
-  partner_data_loaded = signal<PreviewExcel | undefined>(undefined);
+  partner_data_loaded = signal<TablePreview | undefined>(undefined);
 
   async load_partner(fileList: FileList | null) {
     console.log({ fileList });
     if (!fileList) return;
 
-    const previewExcel = new PreviewExcel();
+    const previewExcel = new TablePreview();
     await previewExcel.read(fileList[0], Object.keys(PartnerEnum));
     const data = previewExcel;
     this.partner_data_loaded.set(data);
@@ -26,7 +26,7 @@ export class ExcelService {
  *
  * @template Enum - A generic type representing an enumeration.
  */
-export class PreviewExcel {
+export class TablePreview {
   constructor() {}
   /**
    * Indicates if the file is loading.
@@ -118,5 +118,31 @@ export class PreviewExcel {
     return this.valid_headers.every((header) =>
       headers_string.includes(header)
     );
+  }
+
+  transform_generic_data<T extends Object>(data: T[], valid_headers: string[]) {
+    const header_acumulator = [];
+    for (const header of valid_headers) {
+      if (header in data[0]) header_acumulator.push(header);
+    }
+    this.headers = header_acumulator as Row;
+
+    this.all_rows = data
+      .map((obj) => {
+        const acumulator = [];
+        type ObjectKey = keyof typeof obj;
+        for (const header of valid_headers) {
+          if (header in obj) acumulator.push(obj[header as ObjectKey]);
+        }
+
+        return acumulator as Row;
+      })
+      .sort((a, b) => (a[1] > b[1] ? 1 : -1));
+
+    this.data_object = data;
+    this.map = this.headers.reduce((acc, header: any) => {
+      acc[header] = header;
+      return acc;
+    }, {} as any);
   }
 }

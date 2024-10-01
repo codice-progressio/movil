@@ -8,11 +8,12 @@ import {
   NgbTypeaheadModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { ExcelService } from '../../services/excel.service';
+import { ExcelService, TablePreview } from '../../services/excel.service';
 import { TableComponent } from '../table/table.component';
 import { NotificationService } from '../../services/notification.service';
 import { PartnerService } from '../../services/partner.service';
-import { Partner } from '../../models/partner.model';
+import { Partner, PartnerEnum } from '../../models/partner.model';
+import { NavigationService } from '../../services/navigation.service';
 @Component({
   selector: 'app-partner-load',
   standalone: true,
@@ -29,11 +30,19 @@ import { Partner } from '../../models/partner.model';
 })
 export class PartnerLoadComponent {
   constructor(
+    private navigation_service: NavigationService,
     public excel_service: ExcelService,
     private noti_service: NotificationService,
-    private partner_service: PartnerService
-  ) {}
+    public partner_service: PartnerService
+  ) {
+    this.partner_service.db.read_all().subscribe((res) => {
+      const data = res.rows.map((row) => row.doc as Partner);
+      this.all_data = new TablePreview();
+      this.all_data.transform_generic_data(data, Object.keys(PartnerEnum));
+    });
+  }
 
+  all_data: TablePreview | undefined = undefined;
   excel = faFileExcel;
   save = faFloppyDisk;
 
@@ -54,6 +63,8 @@ export class PartnerLoadComponent {
 
           this.partner_service.db.bulk(data).subscribe(() => {
             this.noti_service.success('Contactos guardados', '');
+
+            this.navigation_service.sale_order();
           });
         }
         if (res.isDenied) this.noti_service.info('Operación cancelada', '');

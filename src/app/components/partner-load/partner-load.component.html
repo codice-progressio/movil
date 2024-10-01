@@ -35,10 +35,32 @@
       >
     </div>
 
-    }
-
     <div class="col-12 table-responsive">
       <app-table [data]="excel_service.partner_data_loaded()"></app-table>
     </div>
+    }
+  </div>
+</div>
+
+<hr />
+
+<div class="container">
+  <div class="row">
+    @if (all_data) {
+    <div class="col-12">
+      <h1>Contactos almacenados</h1>
+    </div>
+
+    <div class="col-12 table-responsive">
+      <app-table [data]="all_data"></app-table>
+    </div>
+
+    } @else {
+
+    <div class="col-12">
+      <h1>No hay contactos almacenados</h1>
+    </div>
+
+    }
   </div>
 </div>
