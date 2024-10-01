@@ -5,7 +5,6 @@ import { from } from 'rxjs';
 import PouchDB from 'pouchdb';
 import { Partner } from '../models/partner.model';
 
-
 /**
  * This class is a wrapper for PouchDB.
  * It is used to create a collection in PouchDB.
@@ -35,5 +34,9 @@ export class Collection<T> {
 
   delete(id: string) {
     return from(this.db.remove({ _id: id } as PouchDB.Core.RemoveDocument));
+  }
+
+  bulk(data: PouchDB.Core.PutDocument<{} & T>[]) {
+    return from(this.db.bulkDocs(data));
   }
 }

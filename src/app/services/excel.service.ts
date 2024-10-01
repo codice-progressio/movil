@@ -41,6 +41,12 @@ export class PreviewExcel {
   all_rows: Row[] = [];
 
   /**
+   * An object containing the data from the Excel file in object format.
+   * @type {any}
+   */
+  data_object: any[] = [];
+
+  /**
    * An array of valid header strings derived from the enumeration.
    * @type {string[]}
    */
@@ -87,6 +93,14 @@ export class PreviewExcel {
     this.headers?.forEach((element) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.map[element as any] = element as string;
+    });
+
+    this.data_object = this.all_rows.map((row) => {
+      const obj: any = {};
+      row.forEach((element, index) => {
+        obj[this.headers?.[index] as string] = element;
+      });
+      return obj;
     });
 
     this.cargando = false;
