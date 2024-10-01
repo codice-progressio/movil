@@ -1,0 +1,40 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      @for (column of data()?.headers|keyvalue; track $index) {
+      <th scope="col">{{ column.key }}</th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (row of data_view; track $index) {
+    <tr>
+      @for (value of row; track $index) {
+      <th scope="row">{{ value }}</th>
+      }
+    </tr>
+    }
+  </tbody>
+</table>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+    [collectionSize]="collection_size"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    (pageChange)="refresh(data_buffer)"
+  >
+  </ngb-pagination>
+
+  <select
+    class="form-select"
+    style="width: auto"
+    [(ngModel)]="pageSize"
+    (ngModelChange)="refresh(data_buffer)"
+  >
+    @for (item of items_per_page; track $index) {
+    <option [ngValue]="item">{{ item }} elementos por página</option>
+    }
+  </select>
+</div>
