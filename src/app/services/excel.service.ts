@@ -51,7 +51,8 @@ export class PreviewExcel {
    * @type {any}
    * @memberof PreviewExcel
    */
-  headers: any = {};
+  map: any = {};
+  headers: Row | undefined = undefined;
 
   /**
    * An error message.
@@ -72,9 +73,9 @@ export class PreviewExcel {
 
     this.cargando = true;
     const rows = await readXlsxFile(file);
-    const headers = rows.shift();
+    this.headers = rows.shift();
     this.all_rows = rows;
-    const all_headers_are_valid = this.validate_headers(headers);
+    const all_headers_are_valid = this.validate_headers(this.headers);
 
     if (!all_headers_are_valid) {
       this.error = `El archivo no tiene los encabezados correctos. Deberia tener los siguientes: ${this.valid_headers.join(
@@ -83,9 +84,9 @@ export class PreviewExcel {
       console.error(this.error);
     }
 
-    headers?.forEach((element) => {
+    this.headers?.forEach((element) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      this.headers[element as any] = element as string;
+      this.map[element as any] = element as string;
     });
 
     this.cargando = false;

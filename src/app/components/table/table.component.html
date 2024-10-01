@@ -1,8 +1,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      @for (column of data()?.headers|keyvalue; track $index) {
-      <th scope="col">{{ column.key }}</th>
+      @for (column of data()?.headers; track $index) {
+      <th scope="col">{{ column }}</th>
       }
     </tr>
   </thead>
