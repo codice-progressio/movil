@@ -5,8 +5,19 @@
       <hr />
     </div>
 
+    @if(!sale_order_service.is_partner_selected()){
     <div class="col-12 col-lg-6">
-      <app-search [title_search]="'Clientes'"></app-search>
+      <app-search
+        [title_search]="'Selecciona un cliente'"
+        (selected)="this.sale_order_service.partner_select($event)"
+        [db]="this.partner_service.db"
+      ></app-search>
     </div>
+    }
   </div>
 </div>
+
+@if(sale_order_service.is_partner_selected()){
+<app-sale-order-form></app-sale-order-form>
+
+}

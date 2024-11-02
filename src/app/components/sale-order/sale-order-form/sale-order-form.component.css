@@ -1,0 +1,7 @@
+
+
+.transparent {
+  background-color: rgba(143, 143, 143, 0.4);
+  backdrop-filter: blur(1.5px);
+
+}

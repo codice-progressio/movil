@@ -10,7 +10,7 @@ export class SearchService {
   private register_components: SearchRegisterComponent<any>[] = [];
 
   register<TModel extends SearchValues>(
-    component: SearchComponent<TModel>,
+    component: SearchComponent<TModel, TModel>,
     db: Collection<TModel>
   ) {
     const component_resgister = new SearchRegisterComponent<TModel>(
@@ -21,7 +21,7 @@ export class SearchService {
     return component_resgister;
   }
 
-  search<TModel>(term: string, component: SearchComponent<TModel>) {
+  search<TModel, TSearchValue extends SearchValues>(term: string, component: SearchComponent<TModel, TSearchValue>) {
     const terms = term.trim().toLowerCase().split(' ');
 
     const register = this.register_components.find(
@@ -52,10 +52,10 @@ export class SearchResults<T> {
 }
 
 export class SearchRegisterComponent<TModel extends SearchValues> {
-  component: SearchComponent<TModel>;
+  component: SearchComponent<TModel, TModel>;
   db: Collection<TModel>;
 
-  constructor(component: SearchComponent<TModel>, db: Collection<TModel>) {
+  constructor(component: SearchComponent<TModel, TModel>, db: Collection<TModel>) {
     this.component = component;
     this.db = db;
   }
@@ -65,5 +65,5 @@ export class SearchRegisterComponent<TModel extends SearchValues> {
  * Interface that represents the values that can be searched in a document.
  */
 export interface SearchValues {
-  search_field: string;
+  search_field?: string;
 }

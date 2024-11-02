@@ -41,7 +41,7 @@ export class Collection<T extends SearchValues> {
   }
 
   _clean_for_search(element: T): T {
-    element.search_field = element.search_field
+    element.search_field = (element.search_field ?? '')
       .toLowerCase()
       .normalize('NFD')
       .replace(
@@ -81,7 +81,7 @@ export class Collection<T extends SearchValues> {
 
     for (const term of terms) {
       const result = this.buffer.filter((element) => {
-        return element.search_field.includes(term);
+        return (element.search_field ?? '').includes(term);
       });
 
       results.push(...result);
@@ -92,7 +92,9 @@ export class Collection<T extends SearchValues> {
       .filter((value, index, self) => {
         return self.indexOf(value) === index;
       })
-      .sort((a, b) => a.search_field.localeCompare(b.search_field))
+      .sort((a, b) =>
+        (a.search_field ?? '').localeCompare(b.search_field ?? '')
+      )
       .slice(0, 10);
 
     return of(unique_results);
