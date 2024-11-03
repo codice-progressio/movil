@@ -1,11 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h1>
-       
-
-        Subir contactos
-      </h1>
+      <h1>{{ title() }}</h1>
     </div>
     <div class="col-12">
       <div class="input-group mb-3">
@@ -19,24 +15,24 @@
         />
       </div>
     </div>
-    @if (excel_service.partner_data_loaded()) {
+    @if (input_file.files?.length) {
 
     <div class="col-12">
       <a
-        name="save_new_contacts"
-        id="save_new_contacts"
+        name="save_news"
+        id="save_news"
         class="btn btn-outline-primary"
-        (click)="save_new_contacts()"
+        (click)="save_news()"
         role="button"
       >
         <fa-icon [icon]="save" [class]="'text-white'"></fa-icon>
 
-        Guardar contactos</a
+        Guardar {{ name() }}</a
       >
     </div>
 
     <div class="col-12 table-responsive">
-      <app-table [data]="excel_service.partner_data_loaded()"></app-table>
+      <app-table [data]="excel_service.data_loaded()"></app-table>
     </div>
     }
   </div>
@@ -46,9 +42,14 @@
 
 <div class="container">
   <div class="row">
-    @if (all_data) {
+    @if (all_data?.all_rows?.length) {
     <div class="col-12">
-      <h1>Contactos almacenados</h1>
+      @if (is_preview_for_new_data) {
+      <h1>Vista previa de nuevos {{ name() }}</h1>
+
+      }@else {
+      <h1>{{ name() | titlecase }} existentes</h1>
+      }
     </div>
 
     <div class="col-12 table-responsive">
@@ -58,7 +59,7 @@
     } @else {
 
     <div class="col-12">
-      <h1>No hay contactos almacenados</h1>
+      <h1>No hay {{ name() }} almacenados</h1>
     </div>
 
     }

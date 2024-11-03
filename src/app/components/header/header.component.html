@@ -23,6 +23,15 @@
             Manejo de contactos</a
           >
         </li>
+        <li class="nav-item active">
+          <!-- Step 4: Close the menu when a link is clicked. -->
+          <a
+            class="nav-link"
+            (click)="isMenuCollapsed = true; navigation_service.product_load()"
+          >
+            Manejo de productos</a
+          >
+        </li>
       </ul>
     </div>
   </div>

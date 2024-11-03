@@ -2,22 +2,23 @@ import { Injectable, signal } from '@angular/core';
 import readXlsxFile, { Row } from 'read-excel-file';
 import { Partner, PartnerEnum } from '../models/partner.model';
 
+enum test {}
+
 @Injectable({
   providedIn: 'root',
 })
 export class ExcelService {
   constructor() {}
 
-  partner_data_loaded = signal<TablePreview | undefined>(undefined);
+  data_loaded = signal<TablePreview | undefined>(undefined);
 
-  async load_partner(fileList: FileList | null) {
-    console.log({ fileList });
+  async load_data(fileList: FileList | null, valid_headers: string[]) {
     if (!fileList) return;
 
     const previewExcel = new TablePreview();
-    await previewExcel.read(fileList[0], Object.keys(PartnerEnum));
+    await previewExcel.read(fileList[0], valid_headers);
     const data = previewExcel;
-    this.partner_data_loaded.set(data);
+    return data;
   }
 }
 
@@ -120,6 +121,19 @@ export class TablePreview {
     );
   }
 
+  /**
+   * Transforms generic data by filtering and sorting based on valid headers.
+   *
+   * @template T - The type of objects in the data array.
+   * @param {T[]} data - The array of data objects to be transformed.
+   * @param {string[]} valid_headers - The list of headers to be considered valid.
+   *
+   * @returns {void} This function does not return a value. It modifies the instance properties:
+   * - `this.headers`: An array of valid headers found in the data.
+   * - `this.all_rows`: A sorted array of rows, each row containing values corresponding to the valid headers.
+   * - `this.data_object`: The original data array.
+   * - `this.map`: An object mapping each valid header to itself.
+   */
   transform_generic_data<T extends Object>(data: T[], valid_headers: string[]) {
     const header_acumulator = [];
     for (const header of valid_headers) {

@@ -8,12 +8,12 @@ import {
   NgbTypeaheadModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { ExcelService, TablePreview } from '../../services/excel.service';
-import { TableComponent } from '../table/table.component';
-import { NotificationService } from '../../services/notification.service';
-import { PartnerService } from '../../services/partner.service';
-import { Partner, PartnerEnum } from '../../models/partner.model';
-import { NavigationService } from '../../services/navigation.service';
+import { ExcelService, TablePreview } from '../../../services/excel.service';
+import { TableComponent } from '../../table/table.component';
+import { NotificationService } from '../../../services/notification.service';
+import { PartnerService } from '../../../services/partner.service';
+import { Partner, PartnerEnum } from '../../../models/partner.model';
+import { NavigationService } from '../../../services/navigation.service';
 @Component({
   selector: 'app-partner-load',
   standalone: true,
@@ -47,7 +47,7 @@ export class PartnerLoadComponent {
   save = faFloppyDisk;
 
   load_file(files: FileList | null) {
-    this.excel_service.load_partner(files);
+    // this.excel_service.load_data(files);
   }
 
   save_new_contacts() {
@@ -55,8 +55,7 @@ export class PartnerLoadComponent {
       .confirmation('¿Desea guardar los nuevos contactos?')
       .subscribe((res) => {
         if (res.isConfirmed) {
-          let data = this.excel_service.partner_data_loaded()
-            ?.data_object as Partner[];
+          let data = this.excel_service.data_loaded()?.data_object as Partner[];
           data = data.map((contact) => {
             return { ...contact, _id: contact._id.toString() };
           });
