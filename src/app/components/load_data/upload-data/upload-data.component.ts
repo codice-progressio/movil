@@ -152,6 +152,8 @@ export class UploadDataComponent<T extends SearchValues> {
    */
   load_data_service = input.required<LoadDataService<T>>();
 
+  icon_for_loaded_data = input('fa-file-excel-o');
+
   /**
    * Event emitter that outputs an array of strings when data is processed.
    * Uses Angular's output decorator for component communication.
@@ -170,6 +172,7 @@ export class UploadDataComponent<T extends SearchValues> {
     );
     if (this.data_has_error(data)) {
       this.clean_data();
+      this.load_data_from_db();
       return;
     }
     this.all_data = data;

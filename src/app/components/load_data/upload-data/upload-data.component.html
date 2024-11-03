@@ -1,9 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h1>{{ title() }}</h1>
+      <h1 class="text-center">
+        <i class="fas fa-download text-info"></i>
+
+        {{ title() }}
+      </h1>
     </div>
-    <div class="col-12">
+    <div class="col-12 col-md-6">
       <div class="input-group mb-3">
         <input
           #input_file
@@ -17,17 +21,17 @@
     </div>
     @if (input_file.files?.length) {
 
-    <div class="col-12">
+    <div class="col-12 col-md-6 text-center">
       <a
-        name="save_news"
+        name="save_news text-white"
         id="save_news"
-        class="btn btn-outline-primary"
+        class="btn btn-primary"
         (click)="save_news()"
         role="button"
       >
-        <fa-icon [icon]="save" [class]="'text-white'"></fa-icon>
+        <i class="fas fa-save text-white"></i>
 
-        Guardar {{ name() }}</a
+        <span class="text-white"> Guardar {{ name() }}</span></a
       >
     </div>
 
@@ -58,8 +62,13 @@
 
     } @else {
 
-    <div class="col-12">
-      <h1>No hay {{ name() }} almacenados</h1>
+    <div class="col-12 text-center">
+      <h1>
+        <i class="fa fa-exclamation-circle text-warning"></i>
+        <br />
+        No hay {{ name() }} almacenados.
+      </h1>
+      <p>Agrega algunos {{ name() }} para empezar.</p>
     </div>
 
     }

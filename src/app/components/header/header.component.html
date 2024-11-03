@@ -20,16 +20,18 @@
             class="nav-link"
             (click)="isMenuCollapsed = true; navigation_service.partner_load()"
           >
-            Manejo de contactos</a
+            <i class="fas fa-users text-info"></i>
+            Contactos</a
           >
         </li>
         <li class="nav-item active">
           <!-- Step 4: Close the menu when a link is clicked. -->
           <a
-            class="nav-link"
+            class="nav-link "
             (click)="isMenuCollapsed = true; navigation_service.product_load()"
           >
-            Manejo de productos</a
+            <i class="fas fa-box text-info"></i>
+            Productos</a
           >
         </li>
       </ul>
