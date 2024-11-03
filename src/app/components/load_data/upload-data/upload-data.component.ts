@@ -87,9 +87,20 @@ export class UploadDataComponent<T extends SearchValues> {
       .subscribe((res) => {
         const data = res.rows.map((row) => row.doc as T);
         this.all_data = new TablePreview();
+
+        if (this.data_has_error(this.all_data)) return;
+
         this.all_data.transform_generic_data(data, this.valid_headers());
         this.is_preview_for_new_data = false;
       });
+  }
+
+  data_has_error(data: typeof this.all_data): boolean {
+    if (data?.error) {
+      this.noti_service.error('Error en formato de excel', data.error);
+      return true;
+    }
+    return false;
   }
 
   is_preview_for_new_data = false;
@@ -157,8 +168,17 @@ export class UploadDataComponent<T extends SearchValues> {
       files,
       this.valid_headers()
     );
+    if (this.data_has_error(data)) {
+      this.clean_data();
+      return;
+    }
     this.all_data = data;
     this.is_preview_for_new_data = true;
+  }
+
+  clean_data() {
+    this.all_data = undefined;
+    if (this.input_file) this.input_file.nativeElement.value = '';
   }
 
   @ViewChild('input_file')
@@ -199,14 +219,17 @@ export class UploadDataComponent<T extends SearchValues> {
             .db.read_all()
             .pipe(
               map((res) => {
+                data = data as any[];
                 const results = res.rows;
                 const data_ready = [];
-                for (const d of data ?? []) {
+                for (const d of data) {
                   const record = results.find((r) => r.doc?._id === d._id);
-                  if (!record) continue;
-                  // The record exist, so the data needs _rev field to update
-                  const _rev = record.doc?._rev;
-                  data_ready.push({ ...d, _rev });
+                  if (record) {
+                    // The record exist, so the data needs _rev field to update
+                    const _rev = record.doc?._rev;
+                    d._rev = _rev;
+                  }
+                  data_ready.push(d);
                 }
                 return data_ready;
               }),
@@ -218,10 +241,6 @@ export class UploadDataComponent<T extends SearchValues> {
               this.noti_service.success(`${this.name()} guardados`, '');
               this.load_data_from_db();
               if (this.input_file?.nativeElement) {
-                alert(
-                  'Se ha cargado el archivo' +
-                    this.input_file.nativeElement.getAttribute('id')
-                );
                 this.input_file.nativeElement.value = '';
               }
 

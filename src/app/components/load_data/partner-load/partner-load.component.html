@@ -1,62 +1,7 @@
-<!-- <div class="container">
-  <div class="row">
-    <div class="col-12">
-      <h1>Subir contactos</h1>
-    </div>
-    <div class="col-12">
-      <div class="input-group mb-3">
-        <input
-          #input_file
-          (change)="load_file(input_file.files)"
-          type="file"
-          class="form-control"
-          id="inputGroupFile01"
-          accept=".xlsx, .xls"
-        />
-      </div>
-    </div>
-    @if (excel_service.partner_data_loaded()) {
-
-    <div class="col-12">
-      <a
-        name="save_new_contacts"
-        id="save_new_contacts"
-        class="btn btn-outline-primary"
-        (click)="save_new_contacts()"
-        role="button"
-      >
-        <fa-icon [icon]="save" [class]="'text-white'"></fa-icon>
-
-        Guardar contactos</a
-      >
-    </div>
-
-    <div class="col-12 table-responsive">
-      <app-table [data]="excel_service.partner_data_loaded()"></app-table>
-    </div>
-    }
-  </div>
-</div>
-
-<hr />
-
-<div class="container">
-  <div class="row">
-    @if (all_data) {
-    <div class="col-12">
-      <h1>Contactos almacenados</h1>
-    </div>
-
-    <div class="col-12 table-responsive">
-      <app-table [data]="all_data"></app-table>
-    </div>
-
-    } @else {
-
-    <div class="col-12">
-      <h1>No hay contactos almacenados</h1>
-    </div>
-
-    }
-  </div>
-</div> -->
+<app-upload-data
+  [title]="'Subir contactos'"
+  [name]="'contactos'"
+  [valid_headers]="valid_headers"
+  [load_data_service]="load_data_service"
+>
+</app-upload-data>

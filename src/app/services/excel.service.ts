@@ -135,6 +135,8 @@ export class TablePreview {
    * - `this.map`: An object mapping each valid header to itself.
    */
   transform_generic_data<T extends Object>(data: T[], valid_headers: string[]) {
+    if (data.length === 0) return;
+
     const header_acumulator = [];
     for (const header of valid_headers) {
       if (header in data[0]) header_acumulator.push(header);

@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Partner, PartnerEnum } from '../models/partner.model';
 import { Collection } from './crud.collection';
 import { SearchValues } from '../components/generic/search.service';
+import { LoadDataService } from '../components/load_data/load-data.service';
+import { GLOBAL_ROUTES } from './navigation.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PartnerService {
-  db: Collection<Partner>;
-  constructor() {
-    this.db = new CollectionPartner<Partner>('partner');
-  }
+export class PartnerService extends LoadDataService<Partner> {
+  override db = new CollectionPartner<Partner>('partner');
+  override navigate_after_load: GLOBAL_ROUTES = GLOBAL_ROUTES.partner_load;
 }
 
 class CollectionPartner<T extends SearchValues> extends Collection<T> {

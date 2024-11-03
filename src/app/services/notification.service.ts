@@ -41,4 +41,14 @@ export class NotificationService {
       text,
     });
   }
+
+  error(title: string, text: string) {
+    Swal.fire({
+      icon: 'error',
+      title,
+      text,
+    });
+  }
+
+
 }
