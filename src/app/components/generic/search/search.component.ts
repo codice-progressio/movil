@@ -58,7 +58,7 @@ export class SaleOrderComponent implements AfterViewInit {
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [NgbTypeaheadModule, FormsModule, JsonPipe],
+  imports: [NgbTypeaheadModule, FormsModule, JsonPipe, CommonModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
@@ -77,6 +77,7 @@ export class SearchComponent<T, TSearchValue extends SearchValues>
   }
 
   db = input.required<Collection<TSearchValue>>();
+  class_icon = input<string>('fa-arrow-circle-right');
 
   ngAfterViewInit(): void {
     const id = 'typeahead-template';

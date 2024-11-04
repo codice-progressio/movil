@@ -9,7 +9,7 @@
         href="javascript:void(0)"
         role="button"
       >
-        <i class="fa fa-times-circle" aria-hidden="true"></i>
+        <i class="fa fa-times-circle text-white" aria-hidden="true"></i>
       </a>
     </h4>
     <p class="card-text">
@@ -22,12 +22,11 @@
     </p>
     <hr />
 
-<!-- 
     <app-search
-        [title_search]="'Seleccionar producto'"
-        (selected)="this.sale_order_service.product_select($event)"
-      ></app-search>
- -->
+      [title_search]="'Agregar producto'"
+      (selected)="this.sale_order_service.product_select($event)"
+      [db]="this.product_service.db"
+    ></app-search>
 
     <div class="list-group">
       @for (line of sale_order_service.buffer_open_draft().lines; track $index)

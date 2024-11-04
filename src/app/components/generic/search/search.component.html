@@ -1,7 +1,8 @@
 <ng-template #rt let-r="result" let-t="term">
   <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="me-1" style="width: 16px" /> -->
+  <i [class]="'fas mr-1'+class_icon()" ></i>
   @for (item of r.display_name; track $index) {
-  <ngb-highlight [result]="item" [term]="t"></ngb-highlight>
+    <ngb-highlight [result]="item" [term]="t"></ngb-highlight>
   <br />
   }
 </ng-template>
@@ -23,5 +24,3 @@
   </div>
 </div>
 
-<!-- <hr /> -->
-<!-- <pre>Model: {{ model | json }}</pre> -->

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SaleOrderService } from '../../../services/sale-order.service';
 import { SearchComponent } from '../../generic/search/search.component';
+import { ProductsService } from '../../../services/products.service';
 
 @Component({
   selector: 'app-sale-order-form',
@@ -12,5 +13,8 @@ import { SearchComponent } from '../../generic/search/search.component';
   styleUrl: './sale-order-form.component.css',
 })
 export class SaleOrderFormComponent {
-  constructor(public sale_order_service: SaleOrderService) {}
+  constructor(
+    public sale_order_service: SaleOrderService,
+    public product_service: ProductsService
+  ) {}
 }
