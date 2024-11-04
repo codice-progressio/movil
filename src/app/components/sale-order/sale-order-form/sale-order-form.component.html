@@ -1,8 +1,7 @@
 <div class="card border-0 shadow" style="min-height: 500px">
   <img class="card-img-top" src="holder.js/100px180/" alt="" />
   <div class="card-body">
-    <h4 class="card-title">
-      {{ sale_order_service.buffer_open_draft().partner_name }}
+    <h4 class="card-title float-end">
       <a
         (click)="sale_order_service.partner_clear()"
         class="btn btn-sm btn-danger"
@@ -11,6 +10,8 @@
       >
         <i class="fa fa-times-circle text-white" aria-hidden="true"></i>
       </a>
+      {{ sale_order_service.buffer_open_draft().partner_name }}
+      {{ sale_order_service.buffer_open_draft().partner_lastname }}
     </h4>
     <p class="card-text">
       {{ sale_order_service.buffer_open_draft().partner_home }}
