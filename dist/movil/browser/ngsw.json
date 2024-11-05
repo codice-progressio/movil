@@ -1,0 +1,133 @@
+{
+  "configVersion": 1,
+  "timestamp": 1730836716433,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main-SMI7D7CB.js",
+        "/manifest.webmanifest",
+        "/polyfills-EJ46DL77.js",
+        "/scripts-EEEIPNC3.js",
+        "/styles-5MC5CIJ3.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/css/all.css",
+        "/assets/css/all.min.css",
+        "/assets/css/brands.css",
+        "/assets/css/brands.min.css",
+        "/assets/css/fontawesome.css",
+        "/assets/css/fontawesome.min.css",
+        "/assets/css/regular.css",
+        "/assets/css/regular.min.css",
+        "/assets/css/solid.css",
+        "/assets/css/solid.min.css",
+        "/assets/css/svg-with-js.css",
+        "/assets/css/svg-with-js.min.css",
+        "/assets/css/v4-font-face.css",
+        "/assets/css/v4-font-face.min.css",
+        "/assets/css/v4-shims.css",
+        "/assets/css/v4-shims.min.css",
+        "/assets/css/v5-font-face.css",
+        "/assets/css/v5-font-face.min.css",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/webfonts/fa-brands-400.ttf",
+        "/assets/webfonts/fa-brands-400.woff2",
+        "/assets/webfonts/fa-regular-400.ttf",
+        "/assets/webfonts/fa-regular-400.woff2",
+        "/assets/webfonts/fa-solid-900.ttf",
+        "/assets/webfonts/fa-solid-900.woff2",
+        "/assets/webfonts/fa-v4compatibility.ttf",
+        "/assets/webfonts/fa-v4compatibility.woff2"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/css/all.css": "733e834594371a4a2ee1bc09805aa14de32acfd5",
+    "/assets/css/all.min.css": "3c73ff1cd7b97c189f139367dbac43dcf5d2c70d",
+    "/assets/css/brands.css": "8464e8574d71b4c4d76d1580865ce96274e8e797",
+    "/assets/css/brands.min.css": "33850e8d2bde60efaec1ee4344d00ff1323753f1",
+    "/assets/css/fontawesome.css": "56da5f3f202dc0c299749206818cf9d56c6653d4",
+    "/assets/css/fontawesome.min.css": "d398081bc1f2f797ce70f1ba2ebfd6412cbd779e",
+    "/assets/css/regular.css": "578af9ae63b2493a062ea721b9c2969501427ee1",
+    "/assets/css/regular.min.css": "0d588db6ba44e890fbd038cebce91fcd359eebaa",
+    "/assets/css/solid.css": "1787165906dc8ffb19823e1f4e6ed4d0a3cace2f",
+    "/assets/css/solid.min.css": "2427ae641013ccd61ec14b0f6ef43805679feadc",
+    "/assets/css/svg-with-js.css": "3f58fbfb8eddcf95fd3e857813efd97c1a3fc268",
+    "/assets/css/svg-with-js.min.css": "6171e7be9fb9c0d52f07f9171bba49894aaebedd",
+    "/assets/css/v4-font-face.css": "471001038cdc2cf3dbdd34c2b4a079bab56a8a58",
+    "/assets/css/v4-font-face.min.css": "049762646683c7ab3d5cec8c293a306471f4e9d9",
+    "/assets/css/v4-shims.css": "245ae9cb0a44024b3b91b6ded0ba34070abd139d",
+    "/assets/css/v4-shims.min.css": "e66bfd9b99863399f6480e258f69695d742d61cb",
+    "/assets/css/v5-font-face.css": "5bd0764a29df88bf7789a10271a423fb0f59d32e",
+    "/assets/css/v5-font-face.min.css": "163aca470abe5e71c685d41c193e960c5a554ea4",
+    "/assets/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
+    "/assets/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
+    "/assets/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
+    "/assets/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
+    "/assets/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
+    "/assets/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
+    "/assets/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
+    "/assets/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "/assets/webfonts/fa-brands-400.ttf": "7ce89c71d5a51ac65b159c71422783dd86529c66",
+    "/assets/webfonts/fa-brands-400.woff2": "e948290773216dc1b50c2121314a8cf918c22b54",
+    "/assets/webfonts/fa-regular-400.ttf": "775e2ecfc18d22b177274453d4c014ca6be63208",
+    "/assets/webfonts/fa-regular-400.woff2": "46e272db3db1072791628679bc469112c8e41017",
+    "/assets/webfonts/fa-solid-900.ttf": "2b8e11389d98122399667cf64941eb58497dc128",
+    "/assets/webfonts/fa-solid-900.woff2": "69335cd6a6ac82253ea5545899cccde35af39131",
+    "/assets/webfonts/fa-v4compatibility.ttf": "bd27e43f3d1e5019faaabc9ec6c5d3d7c5f100ef",
+    "/assets/webfonts/fa-v4compatibility.woff2": "87d0bbc38baa356297521c41ed8ca7d78e8d16e2",
+    "/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/index.html": "20dbaa7e244c299f9f4a262439df81d9a6a41671",
+    "/main-SMI7D7CB.js": "3ed1b1b5ce735a5378c4af22d2072f7a767b1485",
+    "/manifest.webmanifest": "638c13b37b923c3386ce68a05d2cbb98edb2155f",
+    "/polyfills-EJ46DL77.js": "01500e27968fb09f51100a67f46a69297cc263de",
+    "/scripts-EEEIPNC3.js": "2318ded8c885787a1645385a82c1ca883c359034",
+    "/styles-5MC5CIJ3.css": "ceaa53eeb2fd781e789878afc3d00e87ef680ffb"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
