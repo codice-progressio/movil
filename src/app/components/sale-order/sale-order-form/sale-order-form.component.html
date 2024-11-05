@@ -28,14 +28,15 @@
       (selected)="this.sale_order_service.product_select($event)"
       [db]="this.product_service.db"
     ></app-search>
-
     <div class="list-group">
       @for (line of sale_order_service.buffer_open_draft().lines; track $index)
       {
 
       <a
+        #element
+        (click)="select_element($index, this.selected_sing)"
         href="javascript:void(0)"
-        class="list-group-item list-group-item-action flex-column align-items-start"
+        class="d-none list-group-item list-group-item-action flex-column align-items-start"
       >
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{ line.product }}</h5>
@@ -50,14 +51,61 @@
           <h5 class="text-muted">{{ line.amount_total | currency }}</h5>
         </div>
       </a>
-      }
+
+      @if ($index === selected_index) {
       <a
         href="javascript:void(0)"
-        class="list-group-item list-group-item-action flex-column align-items-start bg-success"
+        class="list-group-item flex-column align-items-start list-group-item-dark"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1 text-white">Total</h5>
-          <h5 class="text-white">
+          <a
+            (click)="add_qty(1, $index, false)"
+            class="btn btn-warning"
+            href="javascript:void(0)"
+            role="button"
+            ><i class="fas fa-minus-circle text-white"></i
+          ></a>
+
+          @for (qty of [5,10,30]; track qty) {
+
+          <a
+            (click)="add_qty(qty, selected_index, selected_sing)"
+            class="btn btn-primary text-white"
+            [ngClass]="{
+              'btn-primary': selected_sing,
+              'btn-warning': !selected_sing
+            }"
+            href="javascript:void(0)"
+            role="button"
+          >
+            <i
+              class="fas text-white"
+              [ngClass]="{
+                'fa-plus-circle': selected_sing,
+                'fa-minus-circle': !selected_sing
+              }"
+            ></i>
+            {{ qty }}</a
+          >
+          }
+          <a
+            (click)="add_qty(1, $index, true)"
+            class="btn btn-primary"
+            href="javascript:void(0)"
+            role="button"
+          >
+            <i class="fas fa-plus-circle text-white"></i
+          ></a>
+        </div>
+      </a>
+      } }
+      <a
+        href="javascript:void(0)"
+        class="list-group-item flex-column align-items-start list-group-item-success"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">Total</h5>
+          <h5 class="">
             {{ sale_order_service.buffer_open_draft().amount_total | currency }}
           </h5>
         </div>

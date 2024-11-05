@@ -1,5 +1,11 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import {
+  Component,
+  effect,
+  ElementRef,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SaleOrderService } from '../../../services/sale-order.service';
 import { SearchComponent } from '../../generic/search/search.component';
@@ -13,8 +19,50 @@ import { ProductsService } from '../../../services/products.service';
   styleUrl: './sale-order-form.component.css',
 })
 export class SaleOrderFormComponent {
+  total_lines = 0;
   constructor(
     public sale_order_service: SaleOrderService,
     public product_service: ProductsService
-  ) {}
+  ) {
+    effect(() => {
+      const sale_order = this.sale_order_service.buffer_open_draft();
+      const lines = sale_order.lines.length;
+      if (lines != this.total_lines) this.trigger_special_actions();
+      this.total_lines = lines;
+    });
+  }
+
+  @ViewChildren('element')
+  elements!: QueryList<ElementRef>;
+
+  selected_index: number = 0;
+  selected_sing = true;
+
+  trigger_special_actions() {
+    setTimeout(() => {
+      this.elements.forEach((element, index) => {
+        const nativeElement = element.nativeElement as HTMLAnchorElement;
+        nativeElement.classList.remove('fade-in-down');
+        nativeElement.classList.remove('d-none');
+        if (index == 0) {
+          setTimeout(() => {
+            nativeElement.classList.add('fade-in-down');
+          }, 10);
+        }
+        console.log('Element', element);
+      });
+    });
+  }
+
+  select_element(index: number, sing: boolean) {
+    this.selected_sing = sing;
+    this.selected_index = index;
+    return;
+  }
+
+  add_qty(qty: number, index: number, sing: boolean) {
+    this.selected_index = index ;
+    this.selected_sing = sing;
+    this.sale_order_service.add_qty(qty, index, sing);
+  }
 }
