@@ -5,8 +5,9 @@
     "ng": "ng",
     "dev": "ng serve -o --hmr",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href /movil/; npm run copy_to_docs",
     "watch": "ng build --watch --configuration development",
+    "copy_to_docs": "rm -r /docs; cp -r dist/movil/browser/* docs/",
     "test": "ng test"
   },
   "private": true,
