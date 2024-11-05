@@ -1,17 +1,51 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { Collection } from './crud.collection';
-import { SaleOrder, SaleOrderStates } from '../models/sale-order.model';
+import {
+  SaleOrder,
+  SaleOrderEnum,
+  SaleOrderStates,
+} from '../models/sale-order.model';
 import { Partner } from '../models/partner.model';
-import { SearchResults } from '../components/generic/search.service';
+import {
+  SearchResults,
+  SearchValues,
+} from '../components/generic/search.service';
 import { Product } from '../models/product.model';
+import { LoadDataService } from '../components/load_data/load-data.service';
+import { GLOBAL_ROUTES } from './navigation.service';
+import { NotificationService } from './notification.service';
+import { ConfigurationService } from './configuration.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SaleOrderService {
-  db = new Collection<SaleOrder>('sale_order');
+export class SaleOrderService extends LoadDataService<SaleOrder> {
+  override db = new CollectionSaleOrder<SaleOrder>('sale-order');
+  override navigate_after_load: GLOBAL_ROUTES = GLOBAL_ROUTES.product_load;
 
-  constructor() {}
+  constructor(
+    private noti_service: NotificationService,
+    private configuration_service: ConfigurationService
+  ) {
+    super();
+    effect(() => {
+      const draft = this.buffer_open_draft();
+      this._save_draft_in_localstorage(draft);
+    });
+  }
+
+  private _load_draft_from_localstorage() {
+    const draft = localStorage.getItem('sale_order_draft');
+    return draft;
+  }
+
+  private _save_draft_in_localstorage(draft: SaleOrder) {
+    localStorage.setItem('sale_order_draft', JSON.stringify(draft));
+  }
+
+  private _clear_draft_from_localstorage() {
+    localStorage.removeItem('sale_order_draft');
+  }
 
   /**
    * A signal that holds the current open draft for a sale order.
@@ -31,7 +65,15 @@ export class SaleOrderService {
    * @returns {SaleOrder} A new sale order object initialized with empty values and DRAFT state
    */
   new_draft(): SaleOrder {
+    const draft = this._load_draft_from_localstorage();
+    if (draft) {
+      // This is a workaround to avoid undefined signal
+      setTimeout(() => this.is_partner_selected.set(true));
+      return JSON.parse(draft) as SaleOrder;
+    }
+
     const sale_order: SaleOrder = {
+      _id: this.generate_serial_number(),
       partner_id: '',
       partner_name: '',
       partner_lastname: '',
@@ -42,6 +84,13 @@ export class SaleOrderService {
       lines: [],
     };
     return sale_order;
+  }
+
+  generate_serial_number() {
+    const consecutive = this.configuration_service.consecutive();
+    const prepend = this.configuration_service.serial();
+
+    return `${prepend}/${consecutive.toString().padStart(4, '0')}`;
   }
 
   /**
@@ -77,7 +126,7 @@ export class SaleOrderService {
       draft.partner_name = partner.nombre;
       draft.partner_lastname = partner.apellido;
       draft.partner_home = partner.domicilio;
-      return draft;
+      return JSON.parse(JSON.stringify(draft));
     });
     this.is_partner_selected.set(true);
   }
@@ -185,7 +234,7 @@ export class SaleOrderService {
         );
       }
       draft = this.calculate_values_for_sale_order(draft);
-      return  JSON.parse(JSON.stringify(draft));
+      return JSON.parse(JSON.stringify(draft));
     });
   }
 
@@ -242,5 +291,47 @@ export class SaleOrderService {
     sale_order.amount_total = this.process_decimals(sale_order.amount_total);
 
     return sale_order;
+  }
+
+  /**
+   * Saves the current draft sale order to the database.
+   * The draft is assigned a new consecutive ID and saved to the database.
+   * After saving, the draft is cleared from local storage, and a success notification is displayed.
+   *
+   * @returns void
+   */
+  save() {
+    const draft = this.buffer_open_draft();
+    draft.state = SaleOrderStates.CONFIRMED;
+    this.db.create(draft).subscribe(() => {
+      this._clear_draft_from_localstorage();
+      this.partner_clear();
+      this.noti_service.toast(
+        'La orden ha sido guardada correctamente'
+      );
+      this.configuration_service.update_consecutive();
+      this.buffer_open_draft.set(this.new_draft());
+    });
+  }
+
+
+  
+}
+
+class CollectionSaleOrder<T extends SearchValues> extends Collection<T> {
+  override search_field(element: T): T {
+    const datas = element as unknown as SaleOrder;
+
+    element.search_field = [
+      datas[SaleOrderEnum.partner_name],
+      datas[SaleOrderEnum.partner_lastname],
+      datas[SaleOrderEnum.partner_home],
+    ].join(' ');
+    return element;
+  }
+
+  override display_name(data: T): string[] {
+    const datas = data as unknown as SaleOrder;
+    return [datas[SaleOrderEnum.partner_name]];
   }
 }

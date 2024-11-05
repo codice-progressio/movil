@@ -20,7 +20,12 @@
         sale_order_service.buffer_open_draft().date_order
           | date : "dd/MM/yyyy HH:mm:ss"
       }}
+      <br />
+      {{ sale_order_service.buffer_open_draft().state }}
+      <br />
+      {{ sale_order_service.buffer_open_draft()._id }}
     </p>
+
     <hr />
 
     <app-search
@@ -117,6 +122,14 @@
 <nav class="navbar sticky-bottom transparent">
   <div class="container-fluid justify-content-between pe-5 ps-5">
     <a
+      class="btn btn-secondary text-white btn-lg rounded-circle"
+      href="javascript:void(0)"
+      role="button"
+    >
+      <i class="fas fa-arrow-left text-white"></i>
+    </a>
+
+    <a
       name=""
       id=""
       class="btn btn-danger text-white btn-lg rounded-circle"
@@ -125,15 +138,21 @@
     >
       <i class="fas fa-times text-white"></i>
     </a>
+
+    @if(sale_order_service.buffer_open_draft().state ===
+    SALE_ORDER_STATES.DRAFT) {
+
     <a
-      name=""
-      id=""
+      (click)="save()"
       class="btn btn-primary text-white btn-lg rounded-circle"
       href="javascript:void(0)"
       role="button"
     >
       <i class="fas fa-save text-white"></i>
     </a>
+
+    }@else {
+
     <a
       name=""
       id=""
@@ -143,14 +162,7 @@
     >
       <i class="fas fa-pen text-white"></i>
     </a>
-    <a
-      name=""
-      id=""
-      class="btn btn-secondary text-white btn-lg rounded-circle"
-      href="javascript:void(0)"
-      role="button"
-    >
-      <i class="fas fa-arrow-left text-white"></i>
-    </a>
+
+    }
   </div>
 </nav>

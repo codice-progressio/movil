@@ -1,4 +1,4 @@
-h1, h2, h3, h4, h5, h6, p, a, div, label, input, select, option, textarea, table, th, td {
+h1, h2, h3, h4, h5, h6, p, div, label, input, select, option, textarea, table, th, td {
 
     color: rgb(80, 80, 80) !important;
 }/* You can add global styles to this file, and also import other style files */

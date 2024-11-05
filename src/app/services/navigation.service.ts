@@ -4,7 +4,9 @@ import { NavigationExtras, Router } from '@angular/router';
 export enum GLOBAL_ROUTES {
   partner_load = 'partner/load',
   product_load = 'product/load',
-  sale_order = 'sale-order',
+  sale_order = 'sale-order/new',
+  sale_order_list = 'sale-order',
+  configuration = 'configuration',
 }
 
 @Injectable({

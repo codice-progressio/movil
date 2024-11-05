@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, TemplateRef } from '@angular/core';
 import { defer } from 'rxjs';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor() {}
+  constructor(private toast_service: ToastService) {}
 
   confirmation(
     title: string,
@@ -50,5 +51,24 @@ export class NotificationService {
     });
   }
 
+  private _toast_template!: TemplateRef<any>;
 
+  set toast_template(template: TemplateRef<any>) {
+    this._toast_template = template;
+  }
+
+  get toast_template(): TemplateRef<any> {
+    return this._toast_template;
+  }
+
+  toast_message = signal<string>('');
+
+  toast(msg: string) {
+    this.toast_message.set(msg);
+    this.toast_service.show({
+      template: this.toast_template,
+      classname: '',
+      delay: 3000,
+    });
+  }
 }

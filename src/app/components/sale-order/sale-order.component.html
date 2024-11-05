@@ -1,3 +1,8 @@
+@if(show_list_view){
+<app-sale-order-list></app-sale-order-list>
+
+} @else {
+
 <div class="container">
   <div class="row">
     <div class="col-12 text-center">
@@ -24,4 +29,4 @@
 @if(sale_order_service.is_partner_selected()){
 <app-sale-order-form></app-sale-order-form>
 
-}
+} }

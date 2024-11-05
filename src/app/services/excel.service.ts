@@ -1,14 +1,21 @@
 import { Injectable, signal } from '@angular/core';
 import readXlsxFile, { Row } from 'read-excel-file';
-import { Partner, PartnerEnum } from '../models/partner.model';
 
-enum test {}
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import { DatePipe } from '@angular/common';
+
+const EXCEL_TYPE =
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+const EXCEL_EXTENSION = '.xlsx';
 
 @Injectable({
   providedIn: 'root',
+  
 })
 export class ExcelService {
-  constructor() {}
+  constructor(private datePipe: DatePipe) {}
 
   data_loaded = signal<TablePreview | undefined>(undefined);
 
@@ -19,6 +26,31 @@ export class ExcelService {
     await previewExcel.read(fileList[0], valid_headers);
     const data = previewExcel;
     return data;
+  }
+
+  public exportAsExcelFile(json: any[], excelFileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: ['data'],
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+
+  _generate_name(fileName: string): string {
+    let fecha = this.datePipe.transform(new Date(), 'yyyy_MM_dd_HH_mm');
+
+    return `${fileName}_EXPORTADO_${fecha}${EXCEL_EXTENSION}`;
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(data, this._generate_name(fileName));
   }
 }
 
@@ -134,7 +166,12 @@ export class TablePreview {
    * - `this.data_object`: The original data array.
    * - `this.map`: An object mapping each valid header to itself.
    */
-  transform_generic_data<T extends Object>(data: T[], valid_headers: string[]) {
+  transform_generic_data<T extends Object>(
+    data: T[],
+    valid_headers: string[],
+    sort_index_column = 1,
+    reverse_sort = false
+  ) {
     if (data.length === 0) return;
 
     const header_acumulator = [];
@@ -142,6 +179,8 @@ export class TablePreview {
       if (header in data[0]) header_acumulator.push(header);
     }
     this.headers = header_acumulator as Row;
+
+    const sort_direction = reverse_sort ? -1 : 1;
 
     this.all_rows = data
       .map((obj) => {
@@ -153,7 +192,11 @@ export class TablePreview {
 
         return acumulator as Row;
       })
-      .sort((a, b) => (a[1] > b[1] ? 1 : -1));
+      .sort((a, b) =>
+        a[sort_index_column] > b[sort_index_column]
+          ? 1 * sort_direction
+          : -1 * sort_direction
+      );
 
     this.data_object = data;
     this.map = this.headers.reduce((acc, header: any) => {

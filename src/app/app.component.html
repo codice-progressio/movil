@@ -1,2 +1,9 @@
 <app-header></app-header>
 <router-outlet></router-outlet>
+
+<ng-template #toast>
+  <i class="fas fa-exclamation-circle  mr-3"></i>
+  <span class=""> {{ noti_service.toast_message() }} </span>
+</ng-template>
+
+<app-toast></app-toast>

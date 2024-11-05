@@ -3,10 +3,15 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
+import { DatePipe } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideServiceWorker('ngsw-worker.js', {
-        enabled: !isDevMode(),
-        registrationStrategy: 'registerWhenStable:30000'
-    })]
+  providers: [
+    provideRouter(routes),
+    DatePipe,
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
+  ],
 };

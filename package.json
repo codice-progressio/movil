@@ -31,12 +31,14 @@
     "@sweetalert2/ngx-sweetalert2": "^12.4.0",
     "@types/pouchdb": "^6.4.2",
     "bootstrap": "^5.3.3",
+    "file-saver": "^2.0.5",
     "pouchdb": "^9.0.0",
     "pouchdb-find": "^9.0.0",
     "read-excel-file": "^5.8.5",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.1",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
@@ -44,6 +46,7 @@
     "@angular/cli": "^17.2.2",
     "@angular/compiler-cli": "^17.2.0",
     "@angular/localize": "^17.2.0",
+    "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

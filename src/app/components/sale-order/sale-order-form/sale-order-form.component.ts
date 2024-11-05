@@ -10,6 +10,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SaleOrderService } from '../../../services/sale-order.service';
 import { SearchComponent } from '../../generic/search/search.component';
 import { ProductsService } from '../../../services/products.service';
+import { SaleOrderStates } from '../../../models/sale-order.model';
+import { ConfigurationService } from '../../../services/configuration.service';
 
 @Component({
   selector: 'app-sale-order-form',
@@ -22,15 +24,21 @@ export class SaleOrderFormComponent {
   total_lines = 0;
   constructor(
     public sale_order_service: SaleOrderService,
-    public product_service: ProductsService
+    public product_service: ProductsService, 
+    public configuration_service: ConfigurationService
   ) {
     effect(() => {
       const sale_order = this.sale_order_service.buffer_open_draft();
       const lines = sale_order.lines.length;
       if (lines != this.total_lines) this.trigger_special_actions();
       this.total_lines = lines;
+      this.state = sale_order.state;
     });
   }
+
+  SALE_ORDER_STATES = SaleOrderStates;
+
+  state: SaleOrderStates = SaleOrderStates.DRAFT;
 
   @ViewChildren('element')
   elements!: QueryList<ElementRef>;
@@ -49,7 +57,6 @@ export class SaleOrderFormComponent {
             nativeElement.classList.add('fade-in-down');
           }, 10);
         }
-        console.log('Element', element);
       });
     });
   }
@@ -61,8 +68,12 @@ export class SaleOrderFormComponent {
   }
 
   add_qty(qty: number, index: number, sing: boolean) {
-    this.selected_index = index ;
+    this.selected_index = index;
     this.selected_sing = sing;
     this.sale_order_service.add_qty(qty, index, sing);
+  }
+
+  save() {
+    this.sale_order_service.save();
   }
 }
